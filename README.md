@@ -19,7 +19,8 @@ The parameters go as follows:
   
   Dropout rate, number of layers - This is the main idea here. You start with a relatively small network with rate zero. You train the network and you look if the CV accuracy (or other metric) is bigger or smaller than the previous model (init with acc = 0), if it is bigger, you can continue so you add more layers, if it is lower, you overfited so you increase the rate. Then you repeat.
                              
-And why aren't we just training multiple networks? Because every time we increase the rate or add another dense layer, we keep the weights of the network from the previous training, which is allowed by the whole structure of the network, where we're basically taking the network as it was and adding a layer on top of it. (we have to retrain the final reduction and classification block)                                                       
+And why aren't we just training multiple networks? Because every time we increase the rate or add another dense layer, we keep the weights of the network from the previous training, which is allowed by the whole structure of the network, where we're basically taking the network as it was and adding a layer on top of it. (we have to retrain the final reduction and classification block)
+
 See the code for the details.
 
 The aim of this project is not to beat the NasNets, neither to be eaisier to train than pure denseNets, but to introduce some middle ground in the expensiveness to train, automation and hopefuly performance. Also, as written in the CLR paper, all of this might seem like you actaully have to pick more parameters than fewer, and that would be true. But the point of doing all of this is that the network should be much more robust to those parameters while still giving better results.
