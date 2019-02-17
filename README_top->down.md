@@ -31,6 +31,8 @@ And why aren't we just training multiple networks? Because every time we increas
  
 See the code for the details.
 
+# Blah blah blah
+
 The aim of this project is not to beat the NasNets, neither to be eaisier to train than pure denseNets, but to introduce some middle ground in the expensiveness to train, automation and hopefuly performance. Also, as written in the CLR paper, all of this might seem like you actaully have to pick more parameters than fewer, and that would be true. But the point of doing all of this is that the network should be much more robust to those parameters while still giving better results.
 
 It is motivated by the love for automation and ridiculous demands of NasNets, inspired by denseNet regarding the structure and by CLR paper regarding the automation of the parameters.
