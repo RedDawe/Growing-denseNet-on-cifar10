@@ -16,6 +16,18 @@ And why aren't we just training multiple networks? Because every time we increas
 
 * I used one big dense block, but you can split it into multiple ones with bottlenecks (1x1 convs) after a certain number of layers
 
+# To sum up
+Dense block
+- your typical dense block, you can introduce bottlenecks and reductions (although, reduction is advised to use only in the begininng)
+- at the end of this you add layers
+- you reuse the weights here
+
+Reduction block
+- instead of using just pooling as in the paper, you do pooling, but at the same time you use convolution of the same size with valid padding and then you concatenate the two
+- always has the same number of layers
+- you retrain every time
+
+
 # The rest of the hyper-parameters
   LR - here I just uced the Cyclical Learning Rate
   
@@ -36,16 +48,3 @@ See the code for the details.
 The aim of this project is not to beat the NasNets, neither to be eaisier to train than pure denseNets, but to introduce some middle ground in the expensiveness to train, automation and hopefuly performance. Also, as written in the CLR paper, all of this might seem like you actaully have to pick more parameters than fewer, and that would be true. But the point of doing all of this is that the network should be much more robust to those parameters while still giving better results.
 
 It is motivated by the love for automation and ridiculous demands of NasNets, inspired by denseNet regarding the structure and by CLR paper regarding the automation of the parameters.
-
-# The structure once more
-The whole network consists of dense block and then reduction block.
-
-Dense block
-- your typical dense block, you can introduce bottlenecks and reductions (although, reduction is advised to use only in the begininng)
-- at the end of this you add layers
-- you reuse the weights here
-
-Reduction block
-- instead of using just pooling as in the paper, you do pooling, but at the same time you use convolution of the same size with valid padding and then you concatenate the two
-- always has the same shape
-- you retrain every time
