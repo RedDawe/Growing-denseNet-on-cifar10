@@ -7,7 +7,7 @@ The parameters go as follows:
   
   LR - here I just uced the Cyclical Learning Rate
   
-  Number of filters - this one is the only one that has to be chosen by you, or you have to run the network multiple times as in NasNet
+  Number of filters - this one is the only one that has to be chosen by you, or you have to run the network multiple times as you would with a NasNet
   
   Concat vs Sum - NasNets worry about this, but denseNets just always use concatenation and they outperform resNets (which use sum), so I just went with pure denseNet here
   
