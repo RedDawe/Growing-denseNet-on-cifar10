@@ -1,10 +1,16 @@
 # dense3n
 
-The dense3n is just an idea, how to take transfer learning on another level. For luck of computational resources I couldn't train or fine-tune the network, or even try the netwok on ImageNet. The ideas should apply though.
+It is motivated by the love for automation and ridiculous demands of NasNets, inspired by denseNet regarding the structure and by CLR paper regarding the automation of the parameters. I have always wanted an automatic network, the NasNets were the first (worth mentioning) to try that, but they are extremely expensive to train, so I came up with an alternative way to search for the architecture. While NasNets just basically brute force possible values for all parameters, I decided to handle each one on it's own. As I have said, the basic structure is denseNet, first with dense block(s) and then with a custom dense-reduction block, that theoretically migh help the network hold the relative positions, by not ever using pure pooling layers.
 
-It is motivated by the love for automation and ridiculous demands of NasNets, inspired by denseNet regarding the structure and by CLR paper regarding the automation of the parameters.
 
-I have always wanted an automatic network, the NasNets were the first (worth mentioning) to try that, but they are extremely expensive to train, so I came up with an alternative way to search for the architecture. While NasNets just basically brute force possible values for all parameters, I decided to handle each one on it's own. As I have said, the basic structure is denseNet, first with dense block(s) and then with a custom dense-reduction block, that theoretically migh help the network hold the relative positions, by not ever using pure pooling layers.
+
+
+
+
+
+
+
+
 
 The parameters go as follows:
   
@@ -25,3 +31,6 @@ The parameters go as follows:
 See the code for the details.
 
 The aim of this project is not to beat the NasNets, neither to be eaisier to train than pure denseNets, but to introduce some middle ground with the expensivenes to train, automation and hopefuly performance. Also, as written in the CLR paper, all of this might seem like you actaully have to pick more parameters than fewer, and that would be true. But the point of doing all of this is that the network should be much more robust to those parameters while still giving better results.
+
+# Disclaimer
+The dense3n is just an idea. For luck of computational resources I couldn't train or fine-tune the network, or even try the netwok on ImageNet. The ideas should apply though.
