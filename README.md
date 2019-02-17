@@ -1,3 +1,8 @@
+# Disclaimer
+The dense3n is just an idea. For luck of computational resources I couldn't train or fine-tune the network, or even try the netwok on ImageNet. The ideas should apply though.
+
+Also, probably read CLR, NasNet and denseNet papers before this.
+
 # dense3n
 
 I have always wanted an automatic network, the NasNets were the first (worth mentioning) to try that, but they are extremely expensive to train, so I came up with an alternative way to search for the architecture. While NasNets just basically brute force possible values for all parameters, I decided to handle each one on it's own. The basic structure is denseNet, first with dense block(s)* and then with a custom dense-reduction block, that theoretically might help the network hold the relative positions, by not ever using pure pooling layers.
@@ -39,8 +44,3 @@ Reduction block
 - instead of using just pooling as in the paper, you do pooling, but at the same time you use convolution of the same size with valid padding and then you concatenate the two
 - always has the same shape
 - you retrain every time
-
-# Disclaimer
-The dense3n is just an idea. For luck of computational resources I couldn't train or fine-tune the network, or even try the netwok on ImageNet. The ideas should apply though.
-
-Also, probably read CLR, NasNet and denseNet papers before this.
