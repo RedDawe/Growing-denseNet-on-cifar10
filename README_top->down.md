@@ -16,7 +16,7 @@ And why aren't we just training multiple networks? Because every time we increas
 
 * I used one big dense block, but you can split it into multiple ones with bottlenecks (1x1 convs) after a certain number of layers
 
-#The rest of the hyper-parameters
+# The rest of the hyper-parameters
   LR - here I just uced the Cyclical Learning Rate
   
   Number of filters - this one is the only one that has to be chosen by you, or you have to run the network multiple times as you would with a NasNet
