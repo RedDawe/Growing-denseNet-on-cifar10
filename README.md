@@ -17,9 +17,9 @@ The parameters go as follows:
   
   Number of epochs, eras (era = training of one network) - You can overcome these, if you set for example to stop training when your accuracy doesn't go up for at least 0.01 by 10 epochs, but I just used hard coded values
   
-  Dropout rate, number of layers - This is the main idea here. You start with a relatively small network with rate zero. You train the network and you look if the CV accuracy (or other metric) is bigger or smaller than the previous model (init with acc = 0), if it is bigger, you can continue so you add more layers to the dense block, if it is lower, you overfited so you increase the rate. Then you repeat.
+  Dropout rate, number of layers - This is the main idea here. You start with a relatively small network with rate zero. You train the network and you look if the CV accuracy (or other metric) is bigger or smaller than the previous model (init with acc = 0), if it is bigger, you can continue so you add more layers to the end of the dense block, if it is lower, you overfited so you increase the rate. Then you train again and repeat.
                              
-And why aren't we just training multiple networks? Because every time we increase the rate or add another dense layer, we keep the weights of the network from the previous training, which is allowed by the whole structure of the network, where we're basically taking the network as it was and adding a layer on top of it. (we have to retrain the final reduction and classification block)
+And why aren't we just training multiple networks? Because every time we increase the rate or add another dense layer, we keep the weights of the network from the previous training, which is allowed by the whole structure of the network, where we're basically taking the network as it was and adding a layer on top of it. (we have to retrain the final reduction block)
 
 See the code for the details.
 
@@ -29,5 +29,18 @@ It is motivated by the love for automation and ridiculous demands of NasNets, in
 
 * I used one big dense block, but you can split it into multiple ones with bottlenecks (1x1 convs)
 
+# The structure once more
+The whole network consists of dense block and then reduction block.
+Dense block
+- your typical dense block, you can introduce bottlenecks and reductions (although, reduction is advised to use only in the begininng)
+- at the end of this you add layers
+- you reuse the weights here
+Reduction block
+- instead of using just pooling as in the paper, you do pooling, but at the same time you use convolution of the same size with valid padding and then you concatenate the two
+- always has the same shape
+- you retrain every time
+
 # Disclaimer
 The dense3n is just an idea. For luck of computational resources I couldn't train or fine-tune the network, or even try the netwok on ImageNet. The ideas should apply though.
+
+Also, probably read CLR, NasNet and denseNet papers before this.
