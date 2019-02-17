@@ -12,15 +12,9 @@ The parameters go as follows:
   Concat vs Sum - NasNets worry about this, but denseNets just always use concatenation and they outperform resNets (which use sum), so I just went with pure denseNet here
   Kernel size - As shown in the inception-V4 paper, stucking multiple size 3 convolutions performs usually better than any other size (note that in the code, I used 3x3 conv, but it is better to use 1x3 followed by 3x1 convs)
   Max vs Avg pool - This was never shown to make much of a differnce
-  Number of epochs, eras (era equals one training of the network) - You can overcome these, if you set for example to stop training when your accuracy
-                                                                    doesn't go up for at least 0.01 by 10 epochs, but I just used hard coded values
-  Dropout rate, number of layers - This is the main idea here. You start with a relatively small network with rate zero. You train the network
-                                    and you look if the CV accuracy (or other metric) is bigger or smaller than the previous model (init with acc = 0),
-                                    if it is bigger, you can continoue so you add more layers, if it is lower, you overfited so you increase the rate.
+  Number of epochs, eras (era equals one training of the network) - You can overcome these, if you set for example to stop training when your accuracy doesn't go up for at least 0.01 by 10 epochs, but I just used hard coded values
+  Dropout rate, number of layers - This is the main idea here. You start with a relatively small network with rate zero. You train the network and you look if the CV accuracy (or other metric) is bigger or smaller than the previous model (init with acc = 0), if it is bigger, you can continoue so you add more layers, if it is lower, you overfited so you increase the rate.
                                    
 See the code for the details.
 
-The aim of this project is not to beat the NasNets, neither to be eaisier to train than pure denseNets, but to introduce some middle ground
-with the expensivenes to train, automation and hopefuly performance. Also, as written in the CLR paper, all of this might seem like you actaully
-have to pick more parameters than fewer, and that would be true. But the point of doing all of this is that the network should be much more robust
-to those parameters while still giving better results.
+The aim of this project is not to beat the NasNets, neither to be eaisier to train than pure denseNets, but to introduce some middle ground with the expensivenes to train, automation and hopefuly performance. Also, as written in the CLR paper, all of this might seem like you actaully have to pick more parameters than fewer, and that would be true. But the point of doing all of this is that the network should be much more robust to those parameters while still giving better results.
