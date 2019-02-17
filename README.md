@@ -11,9 +11,9 @@ The parameters go as follows:
   
   Concat vs Sum - NasNets worry about this, but denseNets just always use concatenation and they outperform resNets (which use sum), so I just went with pure denseNet here
   
-  Kernel size - As shown in the inception-V4 paper, stucking multiple size 3 convolutions performs usually better than any other size (note that in the code, I used 3x3 conv, but it is better to use 1x3 followed by 3x1 convs)
+  Kernel size - As shown in the inception-V4 paper, stucking multiple size 3 convolutions usually performs better than any other size (note that in the code, I used 3x3 conv, but it is better to use 1x3 followed by 3x1 convs)
   
-  Max vs Avg pool - This was never shown to make much of a differnce
+  Max vs Avg pool - This was never shown to make much of a difference
   
   Number of epochs, eras (era equals one training of the network) - You can overcome these, if you set for example to stop training when your accuracy doesn't go up for at least 0.01 by 10 epochs, but I just used hard coded values
   
