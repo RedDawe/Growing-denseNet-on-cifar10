@@ -2,9 +2,9 @@
 
 The dense3n is just an idea, how to take transfer learning on another level. For luck of computational resources I couldn't train or fine-tune the network, or even try the netwok on ImageNet. The ideas should apply though.
 
-It is inspired by denseNet regarding the structure and by CLR paper regarding the automation of the parameters, while being motivated by the ridiculous demands of NasNets. So considering that NasNets are extremely expensive to train,
-I came up with an alternative way to search for the architecture. While nasnets just basically brute force possible values for all parameters, I decided to handle each one
-on it's own. As I have said, the basic structure is denseNet, first with dense block(s) and then with a special dense/reduction block.
+It is motivated by the love for automation and ridiculous demands of NasNets, inspired by denseNet regarding the structure and by CLR paper regarding the automation of the parameters.
+
+I have always wanted an automatic netowrk, the NasNets were the first (worth mentioning) to try that, but they are extremely expensive to train, so I came up with an alternative way to search for the architecture. While NasNets just basically brute force possible values for all parameters, I decided to handle each one on it's own. As I have said, the basic structure is denseNet, first with dense block(s) and then with a special dense/reduction block.
 
 The parameters go as follows:
   
