@@ -27,7 +27,7 @@ The aim of this project is not to beat the NasNets, neither to be eaisier to tra
 
 It is motivated by the love for automation and ridiculous demands of NasNets, inspired by denseNet regarding the structure and by CLR paper regarding the automation of the parameters.
 
-* * I used one big dense block, but you can split it into multiple ones with bottlenecks (1x1 convs)
+* I used one big dense block, but you can split it into multiple ones with bottlenecks (1x1 convs)
 
 # Disclaimer
 The dense3n is just an idea. For luck of computational resources I couldn't train or fine-tune the network, or even try the netwok on ImageNet. The ideas should apply though.
