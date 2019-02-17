@@ -7,13 +7,13 @@ import time
 tf.set_random_seed(0)
 np.random.seed(0)
 
-batch_size = 1
+batch_size = 100
 real_low = 0.00001
 real_high = 0.0001
 exp_lr = True
 momentum=0.99
 init_from_files = False
-save_every_cycle = True
+save_every_cycle = False
 
 eval_only = False
 
@@ -77,8 +77,10 @@ n_f = 12
 rate = 0
 best_n_l = n_l
 best_n_f = n_f
+n_l_step = 10
 best_rate = rate
 era = 0
+max_eras = 200
 while growing:
     print('Running n_l =', n_l, 'n_f =', n_f, 'rate = ', rate)
 
@@ -154,7 +156,7 @@ while growing:
             optimizer = tf.train.AdamOptimizer(learning_rate=alpha).minimize(J)
 
         reuse_vars = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES)
-        reuse_vars_dict = dict([(var.op.name, var) for var in reuse_vars if (var.op.name.split('/')[0] == 'to_be_restored' and var.op.name.split('/')[1] != str(n_l - 1)) or var.op.name.split('/')[0] == 'Network'])
+        reuse_vars_dict = dict([(var.op.name, var) for var in reuse_vars if (var.op.name.split('/')[0] == 'to_be_restored' and int(var.op.name.split('/')[1]) < n_l - n_l_step) or var.op.name.split('/')[0] == 'Network'])
         if reuse_vars_dict:
             load_saver = tf.train.Saver(reuse_vars_dict)
         save_saver = tf.train.Saver()
@@ -162,7 +164,8 @@ while growing:
     with tf.Session(config=config) as sess:
         sess.run(tf.global_variables_initializer())
         if init_from_files == True or era != 0:
-            load_saver.restore(sess, tmp_path)
+            if reuse_vars_dict:
+                load_saver.restore(sess, tmp_path)
 
         epoch = 0
         while epoch < (max_epochs if init_from_files == False and era == 0 else max_epochs / 4):
@@ -189,7 +192,6 @@ while growing:
             if not naturally:
                 break
             print(time.time()-start)
-            sys.exit()
 
             if epoch % (2 * stepsize) == 0:
                 performance = np.mean(costs)
@@ -214,16 +216,16 @@ while growing:
 
         model = np.mean(accs)
 
-        print(n_l, n_f, rate, 'Cv profit =', model)
+        print(n_l, n_f, rate, 'Cv accuracy =', model)
 
-        if model > last_model:
+        if model >= last_model:
             save_saver.save(sess, tmp_path)
             save_saver.save(sess, path)
 
             best_n_l = n_l
             best_rate = rate
 
-            n_l += 10
+            n_l += n_l_step
 
             last_model = model
         else:
@@ -231,11 +233,17 @@ while growing:
 
             rate += 0.1
 
+
     era += 1
+
+    if era == max_eras:
+        growing = False
 
 
 tf.reset_default_graph()
 print('Best n_l =', best_n_l, 'and best n_f =', best_n_f)
+n_f = best_n_f
+n_l = best_n_l
 with tf.Session(config=config) as sess:
     with tf.name_scope('network'):
         with tf.name_scope('data'):
@@ -268,7 +276,7 @@ with tf.Session(config=config) as sess:
         for dense_block in range(n_l):
             a_c = tf.layers.batch_normalization(a, training=training, momentum=momentum)
             a_c = tf.layers.dropout(a_c, rate=rate, training=training)
-            a_c = tf.layers.conv2d(a_c, filters=n_f, kernel_size=[3, 3], strides=[1, 1], padding='same', kernel_initializer=tf.contrib.layers.layers.variance_scaling_initializer(factor=0.1), name='to_be_restored/' + str(dense_block))
+            a_c = tf.layers.conv2d(a_c, filters=n_f, kernel_size=[3, 3], strides=[1, 1], padding='same', kernel_initializer=tf.contrib.layers.variance_scaling_initializer(factor=0.1), name='to_be_restored/' + str(dense_block))
             a = tf.concat([a_c, a], axis=-1)
 
         a_c = tf.layers.batch_normalization(a, training=training, momentum=momentum)
@@ -307,7 +315,9 @@ with tf.Session(config=config) as sess:
         with tf.control_dependencies(update_ops):
             optimizer = tf.train.AdamOptimizer(learning_rate=alpha).minimize(J)
 
-        saver = tf.train.Saver()
+        reuse_vars = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES)
+        reuse_vars_dict = dict([(var.op.name, var) for var in reuse_vars])
+        saver = tf.train.Saver(reuse_vars_dict)
 
     saver.restore(sess, path)
 
