@@ -10,9 +10,11 @@ I have always wanted an automatic network, the NasNets were the first (worth men
 # Structure
 The whole network consists of dense block and then reduction block. (from the denseNet paper)
 
-Here's how I handle number of layers and dropout rate. Start with a relatively small network with rate zero. You train the network and you look if the CV accuracy (or other metric) is bigger or smaller than the previous model (init with acc = 0), if it is bigger, you can continue so you add more layers to the end of the dense block, if it is lower, you overfited so you increase the rate. Then you train again and repeat.
+Here's how I handle number of layers in the dense block and dropout rate. Start with a relatively small network with rate zero. You train the network and you look if the CV accuracy (or other metric) is bigger or smaller than the previous model (init with acc = 0), if it is bigger, you can continue so you add more layers to the end of the dense block, if it is lower, you overfited so you increase the rate. Then you train again and repeat.
 
 And why aren't we just training multiple networks? Because every time we increase the rate or add another dense layer, we keep the weights of the network from the previous training, which is allowed by the whole structure of the network, where we're basically taking the network as it was and adding a layer on top of it. (we have to retrain the final reduction block)
+
+The reduction block you want to design as short as possible, so you don't have to retrain as much.
 
 * I used one big dense block, but you can split it into multiple ones with bottlenecks (1x1 convs) after a certain number of layers
 
