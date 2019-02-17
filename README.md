@@ -15,7 +15,7 @@ The parameters go as follows:
   
   Max vs Avg pool - This was never shown to make much of a difference
   
-  Number of epochs, eras (era equals one training of the network) - You can overcome these, if you set for example to stop training when your accuracy doesn't go up for at least 0.01 by 10 epochs, but I just used hard coded values
+  Number of epochs, eras (era = training of one network) - You can overcome these, if you set for example to stop training when your accuracy doesn't go up for at least 0.01 by 10 epochs, but I just used hard coded values
   
   Dropout rate, number of layers - This is the main idea here. You start with a relatively small network with rate zero. You train the network and you look if the CV accuracy (or other metric) is bigger or smaller than the previous model (init with acc = 0), if it is bigger, you can continoue so you add more layers, if it is lower, you overfited so you increase the rate.
                                    
