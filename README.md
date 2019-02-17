@@ -36,10 +36,12 @@ It is motivated by the love for automation and ridiculous demands of NasNets, in
 
 # The structure once more
 The whole network consists of dense block and then reduction block.
+
 Dense block
 - your typical dense block, you can introduce bottlenecks and reductions (although, reduction is advised to use only in the begininng)
 - at the end of this you add layers
 - you reuse the weights here
+
 Reduction block
 - instead of using just pooling as in the paper, you do pooling, but at the same time you use convolution of the same size with valid padding and then you concatenate the two
 - always has the same shape
